@@ -1,4 +1,4 @@
-"use server";
+"use client";
 
 import Image from "next/image";
 import { FaGithub } from "react-icons/fa";
@@ -6,36 +6,10 @@ import { ExternalLink } from "lucide-react";
 import Container from "../../ui/Container";
 import Section from "../../ui/Section";
 import Card from "../../ui/Card";
+import { useProjects } from "@/hooks/useProjects";
 
-interface Project {
-  _id: string;
-  title: string;
-  image: string;
-  tech: string[];
-  description: string;
-  github: string;
-  live: string;
-}
-
-
-export default async function Projects() {
-
-let projects: Project[] = [];
-  try {
-    const response = await fetch(
-      "http://localhost:8080/api/projects",
-      {
-        cache: "no-store",
-      }
-    );
-    projects = await response.json();
-  } catch (error) {
-    console.error(
-      "Error fetching projects:",
-      error
-    );
-  }
-
+export default function Projects() {
+  const { projects } = useProjects();
   return (
     <Container className="mt-0">
       <Section
